@@ -81,6 +81,8 @@ pub enum PromptTemplateType {
     GroqLlama3Tool,
     #[value(name = "mediatek-breeze")]
     BreezeInstruct,
+    #[value(name = "cohere-chat")]
+    CohereChat,
     #[value(name = "embedding")]
     Embedding,
     #[value(name = "none")]
@@ -109,7 +111,8 @@ impl PromptTemplateType {
             | PromptTemplateType::Phi3Chat
             | PromptTemplateType::Glm4Chat
             | PromptTemplateType::GroqLlama3Tool
-            | PromptTemplateType::BreezeInstruct => true,
+            | PromptTemplateType::BreezeInstruct
+            | PromptTemplateType::CohereChat => true,
             PromptTemplateType::MistralInstruct
             | PromptTemplateType::MistralTool
             | PromptTemplateType::MistralLite
@@ -168,6 +171,7 @@ impl FromStr for PromptTemplateType {
             "glm-4-chat" => Ok(PromptTemplateType::Glm4Chat),
             "groq-llama3-tool" => Ok(PromptTemplateType::GroqLlama3Tool),
             "mediatek-breeze" => Ok(PromptTemplateType::BreezeInstruct),
+            "cohere-chat" => Ok(PromptTemplateType::CohereChat),
             "embedding" => Ok(PromptTemplateType::Embedding),
             "none" => Ok(PromptTemplateType::Null),
             _ => Err(error::PromptError::UnknownPromptTemplateType(
@@ -213,6 +217,7 @@ impl std::fmt::Display for PromptTemplateType {
             PromptTemplateType::Glm4Chat => write!(f, "glm-4-chat"),
             PromptTemplateType::GroqLlama3Tool => write!(f, "groq-llama3-tool"),
             PromptTemplateType::BreezeInstruct => write!(f, "mediatek-breeze"),
+            PromptTemplateType::CohereChat => write!(f, "cohere-chat"),
             PromptTemplateType::Embedding => write!(f, "embedding"),
             PromptTemplateType::Null => write!(f, "none"),
         }
@@ -239,6 +244,7 @@ pub trait MergeRagContext: Send {
         context: &[String],
         has_system_prompt: bool,
         policy: MergeRagContextPolicy,
+        _prompt_template: PromptTemplateType,
     ) -> error::Result<()> {
         if (policy == MergeRagContextPolicy::SystemMessage) && has_system_prompt {
             if messages.is_empty() {

@@ -1,6 +1,7 @@
 pub mod baichuan;
 pub mod belle;
 pub mod chatml;
+pub mod cohere;
 pub mod deepseek;
 pub mod gemma;
 pub mod glm;
@@ -21,6 +22,7 @@ use crate::{error::Result, PromptTemplateType};
 use baichuan::*;
 use belle::*;
 use chatml::*;
+use cohere::CohereChatPrompt;
 use deepseek::*;
 use endpoints::chat::{ChatCompletionRequestMessage, Tool};
 use gemma::*;
@@ -90,6 +92,7 @@ pub enum ChatPrompt {
     Glm4ChatPrompt,
     GroqLlama3ToolPrompt,
     BreezeInstructPrompt,
+    CohereChatPrompt,
 }
 impl From<PromptTemplateType> for ChatPrompt {
     fn from(ty: PromptTemplateType) -> Self {
@@ -152,6 +155,7 @@ impl From<PromptTemplateType> for ChatPrompt {
             PromptTemplateType::BreezeInstruct => {
                 ChatPrompt::BreezeInstructPrompt(BreezeInstructPrompt)
             }
+            PromptTemplateType::CohereChat => ChatPrompt::CohereChatPrompt(CohereChatPrompt),
             PromptTemplateType::Embedding => {
                 panic!("Embedding prompt template is not used for building chat prompts")
             }
