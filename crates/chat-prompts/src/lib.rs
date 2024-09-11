@@ -63,6 +63,8 @@ pub enum PromptTemplateType {
     DeepseekChat2,
     #[value(name = "deepseek-chat-25")]
     DeepseekChat25,
+    #[value(name = "deepseek-tool")]
+    DeepseekTool,
     #[value(name = "solar-instruct")]
     SolarInstruct,
     #[value(name = "phi-2-chat")]
@@ -107,12 +109,13 @@ impl PromptTemplateType {
             | PromptTemplateType::IntelNeural
             | PromptTemplateType::DeepseekCoder
             | PromptTemplateType::DeepseekChat2
+            | PromptTemplateType::DeepseekChat25
+            | PromptTemplateType::DeepseekTool
             | PromptTemplateType::Octopus
             | PromptTemplateType::Phi3Chat
             | PromptTemplateType::Glm4Chat
             | PromptTemplateType::GroqLlama3Tool
-            | PromptTemplateType::BreezeInstruct
-            | PromptTemplateType::DeepseekChat25 => true,
+            | PromptTemplateType::BreezeInstruct => true,
             PromptTemplateType::MistralInstruct
             | PromptTemplateType::MistralTool
             | PromptTemplateType::MistralLite
@@ -162,6 +165,7 @@ impl FromStr for PromptTemplateType {
             "deepseek-coder" => Ok(PromptTemplateType::DeepseekCoder),
             "deepseek-chat-2" => Ok(PromptTemplateType::DeepseekChat2),
             "deepseek-chat-25" => Ok(PromptTemplateType::DeepseekChat25),
+            "deepseek-tool" => Ok(PromptTemplateType::DeepseekTool),
             "solar-instruct" => Ok(PromptTemplateType::SolarInstruct),
             "phi-2-chat" => Ok(PromptTemplateType::Phi2Chat),
             "phi-2-instruct" => Ok(PromptTemplateType::Phi2Instruct),
@@ -207,6 +211,7 @@ impl std::fmt::Display for PromptTemplateType {
             PromptTemplateType::DeepseekCoder => write!(f, "deepseek-coder"),
             PromptTemplateType::DeepseekChat2 => write!(f, "deepseek-chat-2"),
             PromptTemplateType::DeepseekChat25 => write!(f, "deepseek-chat-25"),
+            PromptTemplateType::DeepseekTool => write!(f, "deepseek-tool"),
             PromptTemplateType::SolarInstruct => write!(f, "solar-instruct"),
             PromptTemplateType::Phi2Chat => write!(f, "phi-2-chat"),
             PromptTemplateType::Phi2Instruct => write!(f, "phi-2-instruct"),
